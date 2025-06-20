@@ -115,4 +115,4 @@ simple-backend.log
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
-!.yarn/versions
+!.yarn/versionsdeploy/images/*.tar
