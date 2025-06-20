@@ -1,0 +1,620 @@
+{
+  "timestamp": "2025-06-19T22:35:41.758Z",
+  "system": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "nodeVersion": "v24.2.0",
+    "uptime": 0.11689425,
+    "hostname": "Davids-MacBook-Air.local",
+    "cpus": 8,
+    "loadAvg": [
+      19.7001953125,
+      36.3837890625,
+      90.150390625
+    ],
+    "freeMemoryMB": 250,
+    "totalMemoryMB": 16384,
+    "memoryUsage": {
+      "rss": 73875456,
+      "heapTotal": 29114368,
+      "heapUsed": 15399720,
+      "external": 1945607,
+      "arrayBuffers": 16939
+    },
+    "environment": "development",
+    "isDocker": false
+  },
+  "network": {
+    "interfaces": {
+      "lo0": [
+        {
+          "address": "127.0.0.1",
+          "netmask": "255.0.0.0",
+          "family": "IPv4",
+          "internal": true
+        },
+        {
+          "address": "::1",
+          "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+          "family": "IPv6",
+          "internal": true
+        },
+        {
+          "address": "fe80::1",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": true
+        }
+      ],
+      "utun0": [
+        {
+          "address": "fe80::ebd6:c9e4:8a3f:42ac",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "en0": [
+        {
+          "address": "fe80::14e1:5f86:dcec:d2fa",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        },
+        {
+          "address": "fdae:26fa:98af:4a48:1414:2bad:e49:64ae",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        },
+        {
+          "address": "192.168.1.229",
+          "netmask": "255.255.255.0",
+          "family": "IPv4",
+          "internal": false
+        }
+      ],
+      "utun1": [
+        {
+          "address": "fe80::8d0:d10b:a7d3:1085",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "awdl0": [
+        {
+          "address": "fe80::1c0b:89ff:fe25:77ae",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "llw0": [
+        {
+          "address": "fe80::1c0b:89ff:fe25:77ae",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "utun2": [
+        {
+          "address": "fe80::5f8d:2e9a:318e:437b",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "utun3": [
+        {
+          "address": "fe80::ce81:b1c:bd2c:69e",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "utun4": [
+        {
+          "address": "fe80::d4b1:f18f:96d9:38b1",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "utun5": [
+        {
+          "address": "fe80::9405:f32:7db4:51e3",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "utun6": [
+        {
+          "address": "fe80::557a:79ea:8e46:249",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ],
+      "utun7": [
+        {
+          "address": "fe80::4915:d3c3:41ff:4308",
+          "netmask": "ffff:ffff:ffff:ffff::",
+          "family": "IPv6",
+          "internal": false
+        }
+      ]
+    },
+    "dnsServers": [
+      "1.1.1.1",
+      "8.8.8.8"
+    ],
+    "dnsResolution": {
+      "success": true,
+      "message": "Hostname is localhost, no DNS resolution needed",
+      "addresses": [
+        {
+          "address": "127.0.0.1",
+          "family": 4
+        },
+        {
+          "address": "::1",
+          "family": 6
+        }
+      ]
+    },
+    "tcpConnectivity": {
+      "success": true,
+      "time": 5
+    }
+  },
+  "database": {
+    "connection": {
+      "success": true,
+      "time": 25
+    },
+    "info": {
+      "version": "PostgreSQL 16.9 (Homebrew) on aarch64-apple-darwin24.4.0, compiled by Apple clang version 17.0.0 (clang-1700.0.13.3), 64-bit",
+      "database": "psscript",
+      "server_time": "2025-06-19T22:35:41.833Z",
+      "db_size": "8892 kB",
+      "active_connections": "6",
+      "max_connections": "100",
+      "shared_buffers": "128MB",
+      "work_mem": "4MB"
+    },
+    "tables": [
+      {
+        "table_name": "script_analysis",
+        "row_count": "0",
+        "size": "8192 bytes",
+        "total_size": "48 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "script_tags",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "8192 bytes",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "categories",
+        "row_count": "0",
+        "size": "8192 bytes",
+        "total_size": "48 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "tags",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "16 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "script_embeddings",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "16 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "execution_logs",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "40 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "user_favorites",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "8192 bytes",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "script_dependencies",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "8192 bytes",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "script_versions",
+        "row_count": "0",
+        "size": "8192 bytes",
+        "total_size": "64 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "comments",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "16 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "users",
+        "row_count": "0",
+        "size": "8192 bytes",
+        "total_size": "64 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "chat_history",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "32 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "scripts",
+        "row_count": "0",
+        "size": "8192 bytes",
+        "total_size": "64 kB",
+        "seq_scan": "0",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      },
+      {
+        "table_name": "schema_migrations",
+        "row_count": "0",
+        "size": "0 bytes",
+        "total_size": "16 kB",
+        "seq_scan": "1",
+        "idx_scan": "0",
+        "seq_tup_read": "0",
+        "idx_tup_fetch": "0",
+        "inserts": "0",
+        "updates": "0",
+        "deletes": "0",
+        "dead_tuples": "0"
+      }
+    ],
+    "indexes": [
+      {
+        "index_name": "schema_migrations_pkey",
+        "table_name": "schema_migrations",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "schema_migrations_name_key",
+        "table_name": "schema_migrations",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "script_dependencies_pkey",
+        "table_name": "script_dependencies",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "user_favorites_pkey",
+        "table_name": "user_favorites",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "comments_pkey",
+        "table_name": "comments",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "users_pkey",
+        "table_name": "users",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "users_username_key",
+        "table_name": "users",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "users_email_key",
+        "table_name": "users",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "categories_pkey",
+        "table_name": "categories",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "categories_name_key",
+        "table_name": "categories",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "scripts_pkey",
+        "table_name": "scripts",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "scripts_file_hash_key",
+        "table_name": "scripts",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "script_analysis_pkey",
+        "table_name": "script_analysis",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "script_analysis_script_id_key",
+        "table_name": "script_analysis",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "tags_pkey",
+        "table_name": "tags",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "tags_name_key",
+        "table_name": "tags",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "script_tags_pkey",
+        "table_name": "script_tags",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "script_versions_pkey",
+        "table_name": "script_versions",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "script_versions_script_id_version",
+        "table_name": "script_versions",
+        "index_size": "16 kB",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "script_embeddings_pkey",
+        "table_name": "script_embeddings",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "execution_logs_pkey",
+        "table_name": "execution_logs",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "execution_logs_script_id",
+        "table_name": "execution_logs",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "execution_logs_user_id",
+        "table_name": "execution_logs",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "execution_logs_created_at",
+        "table_name": "execution_logs",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "chat_history_pkey",
+        "table_name": "chat_history",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "chat_history_user_id_idx",
+        "table_name": "chat_history",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      },
+      {
+        "index_name": "chat_history_created_at_idx",
+        "table_name": "chat_history",
+        "index_size": "8192 bytes",
+        "scans": "0",
+        "reads": "0",
+        "fetches": "0"
+      }
+    ],
+    "pool": [
+      {
+        "state": "active",
+        "count": "1",
+        "max_time_seconds": "-0.000001"
+      }
+    ]
+  },
+  "connection": {
+    "pgClient": {
+      "success": true,
+      "connectTime": 8,
+      "queryTime": 2
+    }
+  },
+  "recommendations": []
+}

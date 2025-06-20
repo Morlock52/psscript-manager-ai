@@ -1,0 +1,53 @@
+# docker-compose.override.yml
+# Contains development-specific overrides for the base docker-compose.yml
+
+services:
+  # Development overrides for frontend
+  frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile.dev # Use dev Dockerfile
+    volumes:
+      - ./src/frontend:/app # Mount source code
+      - /app/node_modules # Keep node_modules in container
+    environment:
+      - NODE_ENV=development # Set dev environment
+      - VITE_USE_MOCKS=true # Enable mocks for dev
+      - VITE_API_URL=http://localhost:4000/api # Override for browser access
+    command: npm run dev -- --host # Run dev server
+    deploy:
+      resources:
+        limits:
+          memory: 1024M # Increase memory limit for dev
+
+  # Development overrides for backend
+  backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.dev # Use dev Dockerfile
+    volumes:
+      - ./src/backend:/app # Mount source code
+      - /app/node_modules # Keep node_modules in container
+    environment:
+      - NODE_ENV=development # Set dev environment
+      - JWT_SECRET=development_jwt_secret_key # Use dev JWT secret
+    command: npx ts-node src/index.ts # Run with ts-node for dev
+
+  # Development overrides for AI service
+  ai-service:
+    build:
+      context: ./src/ai
+      dockerfile: Dockerfile.dev # Use dev Dockerfile
+    volumes:
+      - ./src/ai:/app # Mount source code
+    environment:
+      - FLASK_ENV=development # Set Flask dev environment
+      - FLASK_DEBUG=1
+      - MOCK_MODE=true # Enable mock mode for development
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-demo-key-for-development} # Use demo key if not set
+      - DEFAULT_MODEL=gpt-4o # Set desired default model
+    command: uvicorn main_mock_fixed:app --host=0.0.0.0 --port=8000 --reload # Run dev server with reload
+
+  # Note: pgadmin and redis-commander are defined in the base docker-compose.yml
+  # under the 'dev' profile. No overrides needed here unless specific dev settings
+  # are required beyond what's in the base file.

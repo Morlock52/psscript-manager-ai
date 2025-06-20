@@ -1,0 +1,219 @@
+version: '3.8'
+
+services:
+  # Frontend service (Defaults to Production Build)
+  frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile.prod # Default to prod build
+    ports:
+      - "3002:3002" # Port mapping might be handled by nginx in prod profile
+    # Volumes removed - added in override for dev
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=${NODE_ENV:-production} # Default to production
+      - PORT=${PORT:-3002}
+      - VITE_API_URL=${API_BASE_URL:-http://localhost:4000}/api # Default API URL
+      - VITE_USE_MOCKS=${VITE_USE_MOCKS:-false} # Default to no mocks
+      - VITE_ENABLE_FILE_UPLOAD=${VITE_ENABLE_FILE_UPLOAD:-true}
+      - VITE_ENABLE_SCRIPT_ANALYSIS=${VITE_ENABLE_SCRIPT_ANALYSIS:-true}
+      - VITE_ENABLE_KNOWLEDGE_SECTION=${VITE_ENABLE_KNOWLEDGE_SECTION:-true}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3002"] # Check against localhost inside container
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M # Use prod memory limit
+
+  # Backend API service (Defaults to Production Build)
+  backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.prod # Default to prod build
+    ports:
+      - "4000:4000" # Port mapping might be handled by nginx in prod profile
+    # Volumes removed - added in override for dev
+    depends_on:
+      - postgres
+      - redis
+      - ai-service
+    environment:
+      - NODE_ENV=${NODE_ENV:-production} # Default to production
+      - PORT=${PORT:-4000}
+      - DB_HOST=${POSTGRES_HOST:-postgres}
+      - DB_PORT=${POSTGRES_PORT:-5432}
+      - DB_NAME=${POSTGRES_DB:-psscript}
+      - DB_USER=${POSTGRES_USER:-postgres}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - REDIS_URL=redis://${REDIS_HOST:-redis}:${REDIS_PORT:-6379}
+      - AI_SERVICE_URL=http://ai-service:8000
+      - JWT_SECRET=${JWT_SECRET:-production_jwt_secret_key} # Default prod secret
+      - EXECUTOR_SERVICE_URL=http://powershell-executor:5001/execute
+      - EXECUTOR_API_KEY=${EXECUTOR_API_KEY:-}
+      - ENABLE_FILE_UPLOAD=${ENABLE_FILE_UPLOAD:-true}
+      - ENABLE_SCRIPT_ANALYSIS=${ENABLE_SCRIPT_ANALYSIS:-true}
+      - ENABLE_KNOWLEDGE_SECTION=${ENABLE_KNOWLEDGE_SECTION:-true}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - VECTOR_SEARCH_ENABLED=${VECTOR_SEARCH_ENABLED:-true}
+      - FILE_HASH_DEDUPLICATION=${FILE_HASH_DEDUPLICATION:-true}
+    # Command removed - added in override for dev
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2' # Use prod CPU limit
+          memory: 1G # Use prod memory limit
+
+  # AI analysis service (Defaults to Production Build)
+  ai-service:
+    build:
+      context: ./src/ai
+      dockerfile: Dockerfile.prod # Default to prod build
+    ports:
+      - "8000:8000" # Port mapping might be handled by nginx in prod profile
+    # Volumes removed - added in override for dev
+    depends_on:
+      - postgres
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MOCK_MODE=${MOCK_MODE:-false} # Default to no mocks
+      - DB_HOST=${POSTGRES_HOST:-postgres}
+      - DB_PORT=${POSTGRES_PORT:-5432}
+      - DB_NAME=${POSTGRES_DB:-psscript}
+      - DB_USER=${POSTGRES_USER:-postgres}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - ENABLE_SCRIPT_ANALYSIS=${ENABLE_SCRIPT_ANALYSIS:-true}
+      - ENABLE_VECTOR_EMBEDDINGS=${ENABLE_VECTOR_EMBEDDINGS:-true}
+      - ENABLE_KNOWLEDGE_SECTION=${ENABLE_KNOWLEDGE_SECTION:-true}
+      - ASSISTANT_API_ENABLED=${ASSISTANT_API_ENABLED:-true}
+    # Command removed - added in override for dev
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2' # Use prod CPU limit
+          memory: 2G # Use prod memory limit
+
+  # PostgreSQL with pgvector extension
+  postgres:
+    image: pgvector/pgvector:pg15
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./src/db/seeds/01-initial-data.sql:/docker-entrypoint-initdb.d/02-seed-data.sql
+      - ./src/db/migrations:/docker-entrypoint-initdb.d/migrations # Added migrations volume from prod
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-psscript}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    restart: unless-stopped # Use prod restart policy
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"] # Use prod healthcheck format
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '2' # Use prod CPU limit
+          memory: 2G # Use prod memory limit
+
+  # Redis for caching
+  redis:
+    image: redis:7.0-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped # Use prod restart policy
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '1' # Use prod CPU limit
+          memory: 512M # Use prod memory limit
+
+  # PowerShell Executor Service (Dev Profile)
+  powershell-executor:
+    profiles: ["dev"] # Only run in dev profile
+    build:
+      context: ./src/executor
+      dockerfile: Dockerfile.executor
+    container_name: psscript_executor
+    restart: unless-stopped
+    environment:
+      - EXECUTOR_API_PORT=5001
+      - EXECUTOR_API_KEY=${EXECUTOR_API_KEY:-} # Use same optional key as backend
+      - NODE_ENV=${NODE_ENV:-development}
+    # No volumes needed if scripts are passed as content via API
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+
+  # Nginx for reverse proxy (Prod Profile)
+  nginx:
+    profiles: ["prod"] # Only run in prod profile
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/www:/usr/share/nginx/html
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+
+  # PGAdmin for PostgreSQL management (Dev Profile)
+  pgadmin:
+    profiles: ["dev"] # Only run in dev profile
+    image: dpage/pgadmin4
+    container_name: psscript-pgadmin # Added container name from override
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+  # Redis commander for Redis management (Dev Profile)
+  redis-commander:
+    profiles: ["dev"] # Only run in dev profile
+    image: rediscommander/redis-commander:latest
+    container_name: psscript-redis-commander # Added container name from override
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    ports:
+      - "8082:8081"
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data: {}
+  redis_data: {}
