@@ -167,6 +167,42 @@ app.get('/api/scripts/:id/similar', (req, res) => {
   res.json([]);
 });
 
+// Delete script endpoint
+app.delete('/api/scripts/:id', (req, res) => {
+  const scriptId = parseInt(req.params.id);
+  const scriptIndex = uploadedScripts.findIndex(s => s.id === scriptId);
+  
+  if (scriptIndex === -1) {
+    return res.status(404).json({ error: 'Script not found' });
+  }
+  
+  // Get the script details before deletion for logging
+  const script = uploadedScripts[scriptIndex];
+  console.log(`Deleting script: ${script.filename} (ID: ${scriptId})`);
+  
+  // Remove from memory array
+  uploadedScripts.splice(scriptIndex, 1);
+  
+  // Try to delete the physical file if it exists
+  const fs = require('fs');
+  if (script.path && fs.existsSync(script.path)) {
+    try {
+      fs.unlinkSync(script.path);
+      console.log(`Deleted file: ${script.path}`);
+    } catch (err) {
+      console.warn(`Could not delete file ${script.path}:`, err.message);
+    }
+  }
+  
+  res.json({ 
+    message: 'Script deleted successfully', 
+    deletedScript: {
+      id: scriptId,
+      filename: script.filename
+    }
+  });
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Simple backend running on http://localhost:${port}`);
